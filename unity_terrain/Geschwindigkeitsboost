@@ -1,0 +1,49 @@
+/**
+ * Gechrieben in C#.
+ * Dies ist ein Ausschnitt aus dem Power-Up Skript, in welchem die Logik für alle Power-Ups drinsteckt.
+ */
+ 
+		/*
+		 *	Bei Verwendung Geschwindigkeitsschub fuer das Auto.
+		 *	Masseneigenschaften werden nicht beeinflusst.
+		 */
+		if (Collected == "Boost" && !taken) {	
+			taken = true;
+			float tmpBoostSpeed = boostSpeed;
+			float endTime = Time.time + boostTime;
+			//passe den boostSpeed entsprechend der aktuellen Geschwindigkeit an
+			if(rigidbody.velocity.magnitude<=10){
+				if(rigidbody.velocity.magnitude<0){
+					boostSpeed = boostSpeed*-2.5f;
+				}
+				else {
+					boostSpeed = boostSpeed*2.5f;
+				}
+			}
+			if(rigidbody.velocity.magnitude>10 && rigidbody.velocity.magnitude<=20){
+				boostSpeed = boostSpeed*2f;
+			}
+			if(rigidbody.velocity.magnitude>20 && rigidbody.velocity.magnitude<=25){
+				boostSpeed = boostSpeed*1.75f;
+			}
+			Vector3 boostVector = rigidbody.velocity*boostSpeed; //berechne den Beschleunigungsvektor
+			
+			Car_Batmobil carScript = GetComponent(typeof(Car_Batmobil)) as Car_Batmobil;
+			int tmpSpeed = carScript.v; //speichere aktuelle Geschwindigkeit
+			carScript.v = (int) (boostVector.magnitude)*4;
+			while(endTime > Time.time)				
+			{			
+				float timer = endTime-Time.time;
+				hudScript.setPowerupRemainingTime(timer); //aktualisiere das HUD
+				//setze Geschwindigkeit konstant schnell
+				carScript.v = (int) (boostVector.magnitude)*4;
+				yield return new WaitForEndOfFrame();
+			}
+			carScript.v = tmpSpeed; //setze die Geschwindigkeit zurueck
+			taken=false;
+			powerUped = false;
+			setCollected("None");	
+			
+			boostSpeed = tmpBoostSpeed;
+		}
+
