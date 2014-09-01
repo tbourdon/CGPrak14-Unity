@@ -1,0 +1,29 @@
+/**
+ * Geschrieben in C#
+ * Der entsprechende Ausschnitt aus dem Power-Up Skript, welcher das Fahrzeug vergrößert.
+ */
+
+		/*
+		 *	Bei Verwendung wird das Auto um einen festen Faktor vergroessert.
+		 *	Die Masse wird erhoeht, andere Eigenschaften bleiben unbeeinflusst.
+		 */
+		if (Collected == "Vergroessern" && !taken) {
+			taken = true;
+			float endTime = Time.time + increaseTime;
+			rigidbody.mass *= incScaleFactor;
+			transform.position += new Vector3(0.0f, 1f, 0.0f);
+			transform.localScale += new Vector3(10.0f,10.0f,10.0f);
+			networkView.RPC ("scale", RPCMode.Others, networkView.viewID, INCREASE);
+			while(endTime > Time.time){
+				float timer = endTime-Time.time;
+				hudScript.setPowerupRemainingTime(timer); //aktualisiere das HUD
+				yield return new WaitForEndOfFrame();
+			}
+			networkView.RPC ("scale", RPCMode.Others, networkView.viewID, DECREASE);
+			transform.position += new Vector3(0.0f, 1f, 0.0f);
+			transform.localScale -= new Vector3(10.0f, 10.0f, 10.0f);
+			rigidbody.mass /= incScaleFactor;
+			taken = false;
+			powerUped = false;
+			setCollected("None");
+		}
