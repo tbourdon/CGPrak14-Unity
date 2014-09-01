@@ -1,6 +1,8 @@
 /**
  * Geschrieben in C#
  * Der entsprechende Ausschnitt aus dem Power-Up Skript, welcher das Fahrzeug vergrößert.
+ * Der Ausschnitt für die Verkleinerung ist vollkommen analog, mit dem Unterschied, dass hierbei der neue Vector
+ * subtrahiert wird.
  */
 
 		/*
