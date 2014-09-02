@@ -1,0 +1,50 @@
+/*
+ *Geschrieben in c#
+ *Autoren: Michael, Dennis, Alexander
+ *Das Respwnskript der powerUpBox, sorgt dafür das sie verschwindet und nach 5 sekunden wieder kommt.
+ */
+
+
+
+
+public class TriggerBox : MonoBehaviour {
+
+	bool triggered=false;
+	float initialRespawnTime;
+	float respawnTime;
+
+	// Use this for initialization
+	void Start () {
+		initialRespawnTime = 5.0f;
+		respawnTime = initialRespawnTime;
+
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		if(triggered){
+			respawnTime-=Time.fixedDeltaTime;
+		}
+		if (triggered && respawnTime <= 0) {
+			setTriggered(false);
+			respawnTime = initialRespawnTime;
+		}
+	}
+
+	void OnTriggerEnter(Collider other){
+		if(other.gameObject.tag == "Player"){
+			setTriggered (true);
+		}
+	}
+
+	private void setTriggered(bool triggered){
+		this.triggered = triggered;
+		if (triggered) {
+			transform.collider.enabled = false;
+			transform.renderer.enabled = false;
+		} else {
+			transform.collider.enabled = true;	
+			transform.renderer.enabled = true;	
+		}
+	}
+}
