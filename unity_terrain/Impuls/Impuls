@@ -1,0 +1,72 @@
+/*
+ * Geschrieben in C#
+ * Die Elemente aus dem PowerUpSkript die für den Impuls wichtig sind.
+ */
+ 
+ 
+  private float impulsrange = 70000;
+  private float impulskraft = 2000;
+ 
+ 
+ /*
+  * Methode zum Verwenden des Impulses.
+  * Wird von der Koroutine aufgerufen.
+  */
+	void Impuls(GameObject block){
+		float range = 10f;
+		Vector3 userLocation = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
+		Vector3 opferLocation = new Vector3 (block.transform.position.x, block.transform.position.y, block.transform.position.z);
+		Vector3 forceDirection = (opferLocation - userLocation) * 100;
+		if (Vector3.SqrMagnitude (block.transform.position - transform.position) <= range * range) {
+			if ((transform.position - block.transform.position).magnitude > 1) {
+				if(block.gameObject.name == "Batmobil"){
+					if(block.gameObject.rigidbody != null){
+						block.rigidbody.AddExplosionForce (impulskraft, block.transform.position, 5f, 30.0f);
+						block.rigidbody.AddForce (forceDirection.normalized*(impulskraft-50000));
+					}
+				}
+				if(block.gameObject.name == "batmobil_old2"){
+					if(block.gameObject.rigidbody != null){
+						block.rigidbody.AddExplosionForce (impulskraft, block.transform.position, 5f, 30.0f);
+						block.rigidbody.AddForce (forceDirection.normalized*(impulskraft-60000));
+					}
+				}
+				if(block.gameObject.name == "neoferrari2 5"){
+					if(block.gameObject.rigidbody != null){
+						block.rigidbody.AddExplosionForce (impulskraft, block.transform.position, 5f, 30.0f);
+						block.rigidbody.AddForce (forceDirection.normalized*(impulskraft-52500)); 
+					}
+				}
+				if(block.gameObject.name == "Kart"){
+					if(block.gameObject.rigidbody != null){
+						block.rigidbody.AddExplosionForce (impulskraft, block.transform.position, 5f, 30.0f);
+						block.rigidbody.AddForce (forceDirection.normalized*(impulsrange-52500)); 
+					}
+				}
+				if(block.gameObject.name == "Motorrad2"){
+					if(block.gameObject.rigidbody != null){
+						block.rigidbody.AddExplosionForce (impulskraft, block.transform.position, 5f, 30.0f);
+						block.rigidbody.AddForce (forceDirection.normalized*(impulsrange-68000)); 
+					}
+				}
+				if(block.gameObject.name == "speeder"){
+					if(block.gameObject.rigidbody != null){
+						block.rigidbody.AddExplosionForce (impulskraft, block.transform.position, 5f, 30.0f);
+						block.rigidbody.AddForce (forceDirection.normalized*(impulsrange-60000)); 
+					}
+				}
+				if(block.gameObject.name == "star_wars_flight"){
+					if(block.gameObject.rigidbody != null){
+						block.rigidbody.AddExplosionForce (impulskraft, block.transform.position, 5f, 30.0f);
+						block.rigidbody.AddForce (forceDirection.normalized*(impulsrange+125000)); 
+					}
+				}
+				else {
+					if(block.gameObject.rigidbody != null){
+						block.rigidbody.AddExplosionForce (impulskraft, block.transform.position, 5f, 30.0f);
+						block.rigidbody.AddForce (forceDirection.normalized*impulsrange); 
+					}
+				}
+			}				
+		}
+	}	
